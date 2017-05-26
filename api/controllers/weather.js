@@ -64,7 +64,7 @@ function webhook(req, res) {
                 });
 
                     var output="The temperature is " ;
-                    result = output +result[0].current.temperature +result[0].location.degreetype );
+                    result = output +result[0].current.temperature +result[0].location.degreetype;
 
             }
         }
