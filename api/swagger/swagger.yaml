@@ -1,0 +1,133 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Hello World App
+# during dev, should point to your local machine
+host: localhost:10010
+# basePath prefixes all resource paths 
+basePath: /
+# 
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+  /webhook:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: webhook
+    
+    post:
+      description: post a message
+      operationId: webhook
+      # message to be stored
+      parameters:
+        - name: title
+          description: Movie properties
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Movie"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GetAnswerResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  # /intent:
+  #   # binds a127 app logic to a route
+  #   x-swagger-router-controller: intent
+  #   get:
+  #     description: Returns answer to the caller
+  #     # used as the method name of the controller
+  #     operationId: getAnswer
+  #     parameters:
+  #       - name: question
+  #         in: query
+  #         description: The question of the user
+  #         required: false
+  #         type: string
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         schema:
+  #           # a pointer to a definition
+  #           $ref: "#/definitions/GetAnswerResponse"
+  #       # responses may fall through to errors
+  #       default:
+  #         description: Error
+  #         schema:
+  #           $ref: "#/definitions/ErrorResponse"
+  /hello:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: hello_world
+    get:
+      description: Returns 'Hello' to the caller
+      # used as the method name of the controller
+      operationId: hello
+      parameters:
+        - name: name
+          in: query
+          description: The name of the person to whom to say hello
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+# complex objects have schema definitions
+definitions:
+  Movie:
+    type: object
+    # properties:
+    #   title:
+    #     type: string
+    #     description: task object name
+    #   year:
+    #     type: number
+    #     description: task description
+    # required:
+    #   - title
+    #   - year
+  GetAnswerResponse:
+    required:
+      - speech
+      - displayText
+      - source
+    properties:
+      # The string of answer
+      speech:
+        type: string
+      displayText:
+        type: string
+      source:
+        type: string
+  HelloWorldResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
