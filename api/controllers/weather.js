@@ -56,7 +56,7 @@ function weather(req, res) {
                 params.origin = getLocationString(paramInfo['address']);
                 console.log(params.origin)
 
-                weather.find({search: 'San Francisco, CA', degreeType: 'F'}, function(err, result) {
+                weather.find({search: 'address', degreeType: 'F'}, function(err, result) {
                     if(err) console.log(err);
                     //console.log(JSON.stringify(result, null, 2));
                     console.log(result[0].current.temperature +result[0].location.degreetype );
