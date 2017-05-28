@@ -20,8 +20,15 @@ var options = {
     sessionId: session
 };
 
+var params = {
+    // REQUIRED
+    address: "San Francisco, CA",
+    unit: "F"
+};
+
+
 module.exports = {
-    webhook: webhook
+    webhookweather: webhookweather
 };
 
 function getLocationString(location) {
@@ -29,9 +36,16 @@ function getLocationString(location) {
         return location
     }
 
+    return String.format('{0} {1} {2} {3} {4} {5}',
+        location['business-name'],
+        location['street-address'],
+        location['city'],
+        location['zip-code'],
+        location['country']);
+
 }
 
-function webhook(req, res) {
+function webhookweather(req, res) {
 
     if(isEmptyObject(req.body)) {
         console.log("fail");
@@ -47,18 +61,19 @@ function webhook(req, res) {
             console.log(req['body']['result']['action'])
             if(req['body']['result']['action'] == 'weather.temperature') {
                 var paramInfo = req['body']['result']['parameters'];
-                params.origin = getLocationString(paramInfo['address']);
-                console.log(params.origin)
+                params.address = getLocationString(paramInfo['address']);
+                console.log(params.address)
 
-                weather.find({search: 'address', degreeType: 'F'}, function(err, result) {
+                weather.find({search: params.address, degreeType: 'F'}, function(err, output) {
                     if(err) console.log(err);
                     //console.log(JSON.stringify(result, null, 2));
-                    console.log(result[0].current.temperature +result[0].location.degreetype );
-                    console.log(result[0].current.skytext);
+                    console.log(output[0].current.temperature +output[0].location.degreetype );
+                    console.log(output[0].current.skytext);
+                    result = "The temperature is " +output[0].current.temperature +output[0].location.degreetype;
+                    callback();
                 });
 
-                    var output="The temperature is " ;
-                    result = output +result[0].current.temperature +result[0].location.degreetype;
+
 
             }
         }
