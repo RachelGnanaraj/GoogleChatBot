@@ -116,7 +116,7 @@ function webhook(req, res) {
                 });
             }
 
-            else if(req['body']['result']['action'] == 'navigation.time')
+            else 
             {
                 var paramInfo = req['body']['result']['parameters'];
                 params.origin = getLocationString(paramInfo['from']);
