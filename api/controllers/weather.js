@@ -29,12 +29,6 @@ function getLocationString(location) {
         return location
     }
 
-    return String.format('{0} {1} {2} {3} {4} {5}',
-        location['business-name'],
-        location['street-address'],
-        location['city'],
-        location['zip-code'],
-        location['country']);
 }
 
 function webhook(req, res) {
@@ -56,7 +50,7 @@ function webhook(req, res) {
                 params.origin = getLocationString(paramInfo['address']);
                 console.log(params.origin)
 
-                weather.find({search: 'San Francisco, CA', degreeType: 'F'}, function(err, result) {
+                weather.find({search: 'address', degreeType: 'F'}, function(err, result) {
                     if(err) console.log(err);
                     //console.log(JSON.stringify(result, null, 2));
                     console.log(result[0].current.temperature +result[0].location.degreetype );
