@@ -21,7 +21,7 @@ var options = {
 };
 
 module.exports = {
-    webhook: webhook
+    webhook: weather
 };
 
 function getLocationString(location) {
@@ -37,7 +37,7 @@ function getLocationString(location) {
         location['country']);
 }
 
-function webhook(req, res) {
+function weather(req, res) {
 
     if(isEmptyObject(req.body)) {
         console.log("fail");
