@@ -64,7 +64,7 @@ function webhookweather(req, res) {
                 params.address = getLocationString(paramInfo['address']);
                 console.log(params.address)
 
-                weather.find({search: params, degreeType: 'F'}, function(err, output) {
+                weather.find({search: 'San Francisco, CA', degreeType: 'F'}, function(err, output) {
                     if(err) console.log(err);
                     //console.log(JSON.stringify(result, null, 2));
                     console.log(output[0].current.temperature +output[0].location.degreetype );
@@ -72,9 +72,6 @@ function webhookweather(req, res) {
                     result = "The temperature is " +output[0].current.temperature +output[0].location.degreetype;
                     callback();
                 });
-
-
-
             }
         }
     ], function(err) {
@@ -84,7 +81,7 @@ function webhookweather(req, res) {
         res.json({
             "speech": result,
             "displayText": result,
-            "source": "apiai-weather-webhook-sample"
+            "source": "apiai-weather-webhook"
         })
     });
 }
