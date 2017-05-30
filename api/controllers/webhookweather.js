@@ -64,7 +64,7 @@ function webhookweather(req, res) {
                 params.address = getLocationString(paramInfo['address']);
                 console.log(params.address)
 
-                weather.find({search: params.address, degreeType: 'F'}, function(err, output) {
+                weather.find({search: params, degreeType: 'F'}, function(err, output) {
                     if(err) console.log(err);
                     //console.log(JSON.stringify(result, null, 2));
                     console.log(output[0].current.temperature +output[0].location.degreetype );
