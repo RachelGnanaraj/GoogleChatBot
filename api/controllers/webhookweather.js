@@ -62,9 +62,10 @@ function webhookweather(req, res) {
             if(req['body']['result']['action'] == 'weather.temperature') {
                 var paramInfo = req['body']['result']['parameters'];
                 params.address = getLocationString(paramInfo['address']);
+                console.log("***Test*** Get Address Request");
                 console.log(params.address)
 
-                weather.find({search: 'San Francisco, CA', degreeType: 'F'}, function(err, output) {
+                weather.find({search: params.address, degreeType: 'F'}, function(err, output) {
                     if(err) console.log(err);
                     //console.log(JSON.stringify(result, null, 2));
                     console.log(output[0].current.temperature +output[0].location.degreetype );
