@@ -23,6 +23,7 @@ var options = {
 var params = {
     // REQUIRED
     address: "San Francisco, CA",
+    dateTime: "",
     unit: "F"
 };
 
@@ -62,6 +63,7 @@ function webhookweather(req, res) {
             if(req['body']['result']['action'] == 'weather.temperature') {
                 var paramInfo = req['body']['result']['parameters'];
                 params.address = getLocationString(paramInfo['address']['city']);
+                params.dateTime = getLocationString(paramInfo['date-time']);
                 //var paramDate = req['body']['result']['parameters']['address'];
                 console.log("***Test Get Address Request***");
                 console.log(params.address);
@@ -69,10 +71,25 @@ function webhookweather(req, res) {
                 weather.find({search: params.address, degreeType: 'F'}, function(err, output) {
                     if(err) console.log(err);
                     //console.log(JSON.stringify(result, null, 2));
+                    var location = output[0].location.name;
+                    var temperature = output[0].current.temperature;
+                    var unit = output[0].location.degreetype;
+                    var skyText = output[0].current.skytext;
+                    var forecastSkyText = output[0].forecast[2].skytextday;
+                    var forecastLow = output[0].forecast[2].low;
+                    var forecastHigh = output[0].forecast[2].high;
 
-                    console.log(output[0].current.temperature +output[0].location.degreetype );
-                    console.log(output[0].current.skytext);
-                    result = "The temperature is " +output[0].current.temperature +output[0].location.degreetype;
+                    if(params.dateTime == ""){
+                        console.log(output[0].current.temperature +output[0].location.degreetype );
+                        console.log(output[0].current.skytext);
+                        result = "Hey! The current temperature in "+location +" is " +temperature +" "+unit;
+                    }
+                    else{
+                        console.log(output[0].current.temperature +output[0].location.degreetype );
+                        console.log(output[0].current.skytext);
+                        result = "The temperature tomorrow in "+location + " will be " +forecastSkyText +"Low "+ forecastLow +unit +" High "+ forecastHigh +unit;
+                    }
+
                     callback();
                 });
             }
