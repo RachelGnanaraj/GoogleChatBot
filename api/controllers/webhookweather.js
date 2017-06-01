@@ -79,13 +79,13 @@ function webhookweather(req, res) {
                     var forecastLow = output[0].forecast[2].low;
                     var forecastHigh = output[0].forecast[2].high;
 
-                    if(params.dateTime == null){
+                    if(params.dateTime === ""){
                         console.log(output[0].current.temperature +output[0].location.degreetype );
                         console.log(output[0].current.skytext);
                         result = "Hey! The current temperature in "+location +" is " +temperature +" "+unit;
                     }
                     else{
-                        result = "The temperature tomorrow in "+location + " will be " +forecastSkyText +"Low "+ forecastLow +unit +" High "+ forecastHigh +unit;
+                        result = "The temperature tomorrow in "+location + " will be " +forecastSkyText +" Low "+ forecastLow +unit +" High "+ forecastHigh +unit;
                     }
 
                     callback();
