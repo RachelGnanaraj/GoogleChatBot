@@ -60,14 +60,16 @@ function webhookweather(req, res) {
         function(callback) {
             console.log(req['body']['result']['action'])
             if(req['body']['result']['action'] == 'weather.temperature') {
-                var paramInfo = req['body']['result']['parameters']['address'];
-                params.address = getLocationString(paramInfo['city']);
-                console.log("***Test*** Get Address Request");
-                console.log(params.address)
+                var paramInfo = req['body']['result']['parameters'];
+                params.address = getLocationString(paramInfo['address']['city']);
+                //var paramDate = req['body']['result']['parameters']['address'];
+                console.log("***Test Get Address Request***");
+                console.log(params.address);
 
                 weather.find({search: params.address, degreeType: 'F'}, function(err, output) {
                     if(err) console.log(err);
                     //console.log(JSON.stringify(result, null, 2));
+
                     console.log(output[0].current.temperature +output[0].location.degreetype );
                     console.log(output[0].current.skytext);
                     result = "The temperature is " +output[0].current.temperature +output[0].location.degreetype;
