@@ -62,9 +62,8 @@ function webhookweather(req, res) {
             console.log(req['body']['result']['action'])
             if(req['body']['result']['action'] == 'weather.temperature') {
                 var paramInfo = req['body']['result']['parameters'];
-                var forecastInfo = req['body']['result']['contexts']['parameters'];
                 params.address = getLocationString(paramInfo['address']['city']);
-                params.dateTime = getLocationString(forecastInfo['date-time.original']);
+                params.dateTime = getLocationString(paramInfo['date-time']);
                 //var paramDate = req['body']['result']['parameters']['address'];
                 console.log("***Test Get Address Request***");
                 console.log(params.address);
@@ -80,15 +79,13 @@ function webhookweather(req, res) {
                     var forecastLow = output[0].forecast[2].low;
                     var forecastHigh = output[0].forecast[2].high;
 
-                    if(params.dateTime == "tomorrow"){
-
-                        result = "The temperature tomorrow in "+location + " will be " +forecastSkyText +" Low "+ forecastLow +unit +" High "+ forecastHigh +unit;
-                    }
-                    else{
-
+                    if(params.dateTime == null){
                         console.log(output[0].current.temperature +output[0].location.degreetype );
                         console.log(output[0].current.skytext);
                         result = "Hey! The current temperature in "+location +" is " +temperature +" "+unit;
+                    }
+                    else{
+                        result = "The temperature tomorrow in "+location + " will be " +forecastSkyText +"Low "+ forecastLow +unit +" High "+ forecastHigh +unit;
                     }
 
                     callback();
