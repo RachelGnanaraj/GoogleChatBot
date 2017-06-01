@@ -60,8 +60,8 @@ function webhookweather(req, res) {
         function(callback) {
             console.log(req['body']['result']['action'])
             if(req['body']['result']['action'] == 'weather.temperature') {
-                var paramInfo = req['body']['result']['parameters'];
-                params.address = getLocationString(paramInfo['address']);
+                var paramInfo = req['body']['result']['parameters']['address'];
+                params.address = getLocationString(paramInfo['city']);
                 console.log("***Test*** Get Address Request");
                 console.log(params.address)
 
