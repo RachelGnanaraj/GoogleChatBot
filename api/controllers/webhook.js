@@ -109,7 +109,8 @@ function webhook(req, res) {
                         console.log(err);
                         return 1;
                     }
-                    if(params.destination === "office"){
+                    var destinationWork = getLocationString(paramInfo['to']['shortcut']);
+                    if(destinationWork === "office"){
                         params.destination ="325 North Old Woodward, Birmingham, MI 48009";
                         console.log("The total distance is "+data);
                         var output = "The total distance is  ";
