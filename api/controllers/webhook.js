@@ -101,7 +101,12 @@ function webhook(req, res) {
                 var paramInfo = req['body']['result']['parameters'];
                 params.origin = getLocationString(paramInfo['from']);
                 params.destination = getLocationString(paramInfo['to']);
-                console.log(params.origin + ' AAAAAAAA ' + params.destination)
+                var destinationWork = getLocationString(paramInfo['to']['shortcut']);
+
+                if(destinationWork === "work"){
+                    params.destination = "25 Heng Mui Keng Terrace,Singapore 119615";
+                }
+                console.log(params.origin + ' - ' + params.destination)
 
                 map.getDistance(params, function (err, data) {
                     if (err) {
@@ -121,7 +126,7 @@ function webhook(req, res) {
                 var paramInfo = req['body']['result']['parameters'];
                 params.origin = getLocationString(paramInfo['from']);
                 params.destination = getLocationString(paramInfo['to']);
-                console.log(params.origin + ' AAAAAAAA ' + params.destination)
+                console.log(params.origin + ' - ' + params.destination)
 
                 map.getDuration(params, function (err, data) {
                     if (err) {
