@@ -101,6 +101,7 @@ function webhook(req, res) {
                 var paramInfo = req['body']['result']['parameters'];
                 params.origin = getLocationString(paramInfo['from']);
                 params.destination = getLocationString(paramInfo['to']);
+                var destinationWork = getLocationString(paramInfo['to']['shortcut']);
 
                 console.log(params.origin + ' - ' + params.destination)
 
@@ -109,9 +110,9 @@ function webhook(req, res) {
                         console.log(err);
                         return 1;
                     }
-                    var destinationWork = getLocationString(paramInfo['to']['shortcut']);
+
                     if(destinationWork === "office"){
-                        params.destination ="325 North Old Woodward, Birmingham, MI 48009";
+                        params.destination ="325 North Old Woodward, Birmingham, MI 48009, USA";
                         console.log("The total distance is "+data);
                         var output = "The total distance is  ";
                         result = output +data;
