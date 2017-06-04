@@ -101,15 +101,16 @@ function webhook(req, res) {
                 var paramInfo = req['body']['result']['parameters'];
                 params.origin = getLocationString(paramInfo['from']);
                 params.destination = getLocationString(paramInfo['to']);
-                if(params.destination == 'office'){
-                    params.destination ="325 North Old Woodward, Birmingham, MI 48009";
-                }
+
                 console.log(params.origin + ' - ' + params.destination)
 
                 map.getDistance(params, function (err, data) {
                     if (err) {
                         console.log(err);
                         return 1;
+                    }
+                    if(params.destination == 'office'){
+                        params.destination ="325 North Old Woodward, Birmingham, MI 48009";
                     }
                     console.log("The total distance is "+data);
                     var output = "The total distance is ";
