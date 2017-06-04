@@ -103,9 +103,9 @@ function webhook(req, res) {
                 params.destination = getLocationString(paramInfo['to']);
                 var destinationWork = getLocationString(paramInfo['to']['shortcut']);
 
-                if(destinationWork === "work"){
+                /*if(destinationWork === "work"){
                     params.destination = "25 Heng Mui Keng Terrace,Singapore 119615";
-                }
+                }*/
                 console.log(params.origin + ' - ' + params.destination)
 
                 map.getDistance(params, function (err, data) {
